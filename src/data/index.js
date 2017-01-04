@@ -1,52 +1,59 @@
+// onst {getTodoById,getTodos,createTodo,toggleTodoById,removeTodoById} = require('./src/data')
 
-const videoA = {
-  id : '2',
+const todoA = {
+  id : "1",
   title:'How you Doin??',
-  duration:240,
-  watched : true
+  completed : true
 }
 
-const videoB = {
-  id : '3',
+const todoB = {
+  id : "2",
   title:'Lets Do this',
-  duration:240,
-  watched : true
+  completed : true
 }
 
-const videoC = {
-  id : '4',
+const todoC = {
+  id : "3",
   title:'Have I learnt This?',
-  duration:1000,
-  watched : false
+  completed : false
 }
-const videos = [videoA,videoB,videoC]
+const todos = [todoA,todoB,todoC]
 
-const getVideos = () => new Promise((resolve) => resolve(videos))
+const getTodos = () => new Promise((resolve) => resolve(todos))
 
-const getVideoById = (id) =>  new Promise((resolve)=>{
-  const [video] = videos.filter((video) => video.id === id )
-  resolve(video)
+const getTodoById = (id) =>  new Promise((resolve)=>{
+  const [todo] = todos.filter((todo) => todo.id === id )
+  resolve(todo)
 })
 
-const createVideo = ({title , duration , watched}) => {
-  const video = {
-    id : videos.length + 1,
+const createTodo = ({title, completed}) => {
+  const todo = {
+    id : todos.length + 1,
     title,
-    duration,
-    watched
+    completed
   }
-  videos.push(video)
-  return video
+  todos.push(todo)
+  return todo
 }
 
-const getObjectById = (type ,id ) => {
-  const types = {
-    video : getVideoById,
-  }
-  return types[type](id)
+const toggleTodoById = (id) => {
+  const todo = todos.filter((todo) => todo.id === id )
+    todo[0].completed = !todo[0].completed
+  return todo[0]
 }
 
-exports.getVideoById = getVideoById;
-exports.getVideos = getVideos;
-exports.createVideo = createVideo;
-exports.getObjectById = getObjectById;
+const removeTodoById = (id) => {
+  var i = todos.length
+   while(i--){
+      if(todos[i] && todos[i].id === id  ){
+          todos.splice(i,1);
+      }
+   }
+   return todos
+}
+
+exports.removeTodoById = removeTodoById;
+exports.getTodoById = getTodoById;
+exports.toggleTodoById = toggleTodoById;
+exports.getTodos = getTodos;
+exports.createTodo = createTodo;
